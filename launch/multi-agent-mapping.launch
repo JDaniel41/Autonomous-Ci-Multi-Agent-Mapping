@@ -1,6 +1,11 @@
 <launch>
   <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [burger, waffle, waffle_pi]"/>
   <arg name="move_forward_only" default="false"/>
+
+  <arg name="first_tb3" value="tb3_0"/>
+  <arg name="second_tb3" value="tb3_1"/>
+  <arg name="third_tb3" value="tb3_2"/>
+
   <include file="$(find turtlebot3_gazebo)/launch/multi_turtlebot3.launch"/>
 
 
@@ -30,7 +35,11 @@
     <arg name="set_map_frame" value="tb3_2/map"/>
   </include>
 
-  <include file="$(find turtlebot3_gazebo)/launch/multi_map_merge.launch"/>
+  <!--<include file="$(find turtlebot3_gazebo)/launch/multi_map_merge.launch"/>-->
+
+  <node pkg="tf" type="static_transform_publisher" name="world_to_$(arg first_tb3)_tf_broadcaster"  args="0 0 0 0 0 0 /map /$(arg first_tb3)/map 100"/>
+  <node pkg="tf" type="static_transform_publisher" name="world_to_$(arg second_tb3)_tf_broadcaster" args="0 0 0 0 0 0 /map /$(arg second_tb3)/map 100"/>
+  <node pkg="tf" type="static_transform_publisher" name="world_to_$(arg third_tb3)_tf_broadcaster" args="0 0 0 0 0 0 /map /$(arg third_tb3)/map 100"/>
 
   <!-- The below line does not launch rviz correctly for some reason. Just use the rosrun equivalent instead -->
   <!--<node name="rviz" pkg="rviz" type="rviz" args="-d 'rospack find turtlebot3_gazebo'/rviz/multi_turtlebot3_slam.rviz"/>-->
