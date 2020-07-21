@@ -1,0 +1,7 @@
+<launch>
+  <arg name="robot_name"/>
+  <arg name="init_post"/>
+
+  
+
+</launch>

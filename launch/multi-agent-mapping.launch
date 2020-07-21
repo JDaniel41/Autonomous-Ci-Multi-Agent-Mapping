@@ -2,40 +2,59 @@
   <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [burger, waffle, waffle_pi]"/>
   <arg name="move_forward_only" default="false"/>
 
-  <arg name="first_tb3" value="tb3_0"/>
-  <arg name="second_tb3" value="tb3_1"/>
-  <arg name="third_tb3" value="tb3_2"/>
-
-  <include file="$(find turtlebot3_gazebo)/launch/multi_turtlebot3.launch"/>
-
-
-
-  <include ns="tb3_0" file="$(find turtlebot3_slam)/launch/turtlebot3_gmapping.launch">
-    <arg name="set_base_frame" value="tb3_0/base_footprint"/>
-    <arg name="set_odom_frame" value="tb3_0/odom"/>
-    <arg name="set_map_frame" value="tb3_0/map"/>
+  <include file="$(find turtlebot3_gazebo)/launch/multi_turtlebot3.launch">
+    <arg name="first_tb3" value="robot_1"/>
+    <arg name="second_tb3" value="robot_2"/>
+    <arg name="third_tb3" value="robot_3"/>
   </include>
 
+  <include ns="$(arg first_tb3)" file="$(find turtlebot3_slam)/launch/turtlebot3_gmapping.launch">
+    <arg name="set_base_frame" value="$(arg first_tb3)/base_footprint"/>
+    <arg name="set_odom_frame" value="$(arg first_tb3)/odom"/>
+    <arg name="set_map_frame" value="$(arg first_tb3)/map"/>
+  </include>
 
-  <include ns="tb3_0" file="$(find turtlebot3_navigation)/launch/move_base.launch">
+  <include ns="$(arg first_tb3)" file="$(find turtlebot3_navigation)/launch/move_base.launch">
     <arg name="model" value="$(arg model)" />
     <arg name="move_forward_only" value="$(arg move_forward_only)"/>
     <arg name="cmd_vel_topic" value="cmd_vel"/>
   </include>
 
-  <include ns="tb3_1" file="$(find turtlebot3_slam)/launch/turtlebot3_gmapping.launch">
-    <arg name="set_base_frame" value="tb3_1/base_footprint"/>
-    <arg name="set_odom_frame" value="tb3_1/odom"/>
-    <arg name="set_map_frame" value="tb3_1/map"/>
+  <include ns="$(arg second_tb3)" file="$(find turtlebot3_slam)/launch/turtlebot3_gmapping.launch">
+    <arg name="set_base_frame" value="$(arg second_tb3)/base_footprint"/>
+    <arg name="set_odom_frame" value="$(arg second_tb3)/odom"/>
+    <arg name="set_map_frame" value="$(arg second_tb3)/map"/>
   </include>
 
-  <include ns="tb3_2" file="$(find turtlebot3_slam)/launch/turtlebot3_gmapping.launch">
-    <arg name="set_base_frame" value="tb3_2/base_footprint"/>
-    <arg name="set_odom_frame" value="tb3_2/odom"/>
-    <arg name="set_map_frame" value="tb3_2/map"/>
+  <include ns="$(arg second_tb3)" file="$(find turtlebot3_navigation)/launch/move_base.launch">
+    <arg name="model" value="$(arg model)" />
+    <arg name="move_forward_only" value="$(arg move_forward_only)"/>
+    <arg name="cmd_vel_topic" value="cmd_vel"/>
   </include>
 
-  <!--<include file="$(find turtlebot3_gazebo)/launch/multi_map_merge.launch"/>-->
+  <include ns="$(arg third_tb3)" file="$(find turtlebot3_slam)/launch/turtlebot3_gmapping.launch">
+    <arg name="set_base_frame" value="$(arg third_tb3)/base_footprint"/>
+    <arg name="set_odom_frame" value="$(arg third_tb3)/odom"/>
+    <arg name="set_map_frame" value="$(arg third_tb3)/map"/>
+  </include>
+
+  <include ns="$(arg third_tb3)" file="$(find turtlebot3_navigation)/launch/move_base.launch">
+    <arg name="model" value="$(arg model)" />
+    <arg name="move_forward_only" value="$(arg move_forward_only)"/>
+    <arg name="cmd_vel_topic" value="cmd_vel"/>
+  </include>
+
+  <node pkg="multirobot_map_merge" type="map_merge" respawn="false" name="map_merge" output="screen">
+    <param name="robot_map_topic" value="map"/>
+    <param name="robot_namespace" value="robot"/>
+    <param name="merged_map_topic" value="map"/>
+    <param name="world_frame" value="map"/>
+    <param name="known_init_poses" value="false"/>
+    <param name="merging_rate" value="0.5"/>
+    <param name="discovery_rate" value="0.05"/>
+    <param name="estimation_rate" value="0.1"/>
+    <param name="estimation_confidence" value="1.0"/>
+  </node>
 
   <node pkg="tf" type="static_transform_publisher" name="world_to_$(arg first_tb3)_tf_broadcaster"  args="0 0 0 0 0 0 /map /$(arg first_tb3)/map 100"/>
   <node pkg="tf" type="static_transform_publisher" name="world_to_$(arg second_tb3)_tf_broadcaster" args="0 0 0 0 0 0 /map /$(arg second_tb3)/map 100"/>

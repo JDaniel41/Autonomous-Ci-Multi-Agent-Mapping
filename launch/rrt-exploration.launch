@@ -1,0 +1,34 @@
+<launch>
+  <arg name="first_tb3" value="robot_1"/>
+  <arg name="second_tb3" value="robot_2"/>
+  <arg name="third_tb3" value="robot_3"/>
+
+  <node pkg="rrt_exploration" type="global_rrt_detector" name="global_rrt_detector">
+    <param name="map_topic" value="/map"/>
+  </node>
+
+  <node ns="$(arg first_tb3)" pkg="rrt_exploration" type="local_rrt_detector" name="local_rrt_detector">
+    <param name="/robot_1/base_link" value="base_link"/>
+    <param name="map_topic" value="map"/>
+  </node>
+
+  <node ns="$(arg second_tb3)" pkg="rrt_exploration" type="local_rrt_detector" name="local_rrt_detector">
+    <param name="/robot_1/base_link" value="base_link"/>
+    <param name="map_topic" value="map"/>
+  </node>
+
+  <node ns="$(arg third_tb3)" pkg="rrt_exploration" type="local_rrt_detector" name="local_rrt_detector">
+    <param name="/robot_1/base_link" value="base_link"/>
+    <param name="map_topic" value="map"/>
+  </node>
+
+  <node pkg="rrt_exploration" type="filter.py" name="filter" output="screen">
+    <param name="map_topic" value="map"/>
+    <param name="info_radius" value="1"/>
+    <param name="costmap_clearing_threshold" value="70"/>
+    <param name="goals_topic" value="/detected_points"/>
+    <param name="namespace" value="robot_"/>
+    <param name="rate" value="100"/>
+    <param name="n_robots" value="3"/>
+  </node>
+</launch>
