@@ -1,0 +1,41 @@
+process[global_rrt_detector-1]: started with pid [14584]
+process[robot_1/local_rrt_detector-2]: started with pid [14585]
+process[robot_2/local_rrt_detector-3]: started with pid [14587]
+process[robot_3/local_rrt_detector-4]: started with pid [14592]
+process[filter-5]: started with pid [14598]
+[INFO] [1595466627.433236, 0.000000]: Waiting for the map
+[ERROR] [1595466627.447216, 0.000000]: bad callback: <function globalMap at 0x7f819e0a6e50>
+Traceback (most recent call last):
+  File "/opt/ros/melodic/lib/python2.7/dist-packages/rospy/topics.py", line 750, in _invoke_callback
+    cb(msg)
+  File "/home/jmdanie/catkin_ws/src/rrt_exploration/scripts/filter.py", line 42, in globalMap
+    [litraIndx])-namespace_init_count
+ValueError: invalid literal for int() with base 10: '_'
+
+[ERROR] [1595466627.448144, 0.000000]: bad callback: <function globalMap at 0x7f819e0a6e50>
+Traceback (most recent call last):
+  File "/opt/ros/melodic/lib/python2.7/dist-packages/rospy/topics.py", line 750, in _invoke_callback
+    cb(msg)
+  File "/home/jmdanie/catkin_ws/src/rrt_exploration/scripts/filter.py", line 42, in globalMap
+    [litraIndx])-namespace_init_count
+ValueError: invalid literal for int() with base 10: '_'
+
+[ERROR] [1595466627.448319, 0.000000]: bad callback: <function globalMap at 0x7f819e0a6e50>
+Traceback (most recent call last):
+  File "/opt/ros/melodic/lib/python2.7/dist-packages/rospy/topics.py", line 750, in _invoke_callback
+    cb(msg)
+  File "/home/jmdanie/catkin_ws/src/rrt_exploration/scripts/filter.py", line 42, in globalMap
+    [litraIndx])-namespace_init_count
+ValueError: invalid literal for int() with base 10: '_'
+
+[INFO] [1595466627.573697, 20.073000]: Waiting for the global costmap
+[INFO] [1595466627.674048, 20.174000]: Waiting for the global costmap
+[INFO] [1595466627.775048, 20.275000]: Waiting for the global costmap
+[INFO] [1595466627.877320, 20.376000]: Waiting for the global costmap
+[INFO] [1595466627.982176, 20.476000]: Waiting for the global costmap
+[INFO] [1595466628.083021, 20.577000]: Waiting for the global costmap
+[INFO] [1595466628.184923, 20.678000]: Waiting for the global costmap
+[INFO] [1595466628.286133, 20.779000]: Waiting for the global costmap
+[INFO] [1595466628.387794, 20.880000]: Waiting for the global costmap
+[INFO] [1595466628.488577, 20.980000]: Waiting for the global costmap
+[INFO] [1595466628.590277, 21.080000]: Waiting for the global costmap
