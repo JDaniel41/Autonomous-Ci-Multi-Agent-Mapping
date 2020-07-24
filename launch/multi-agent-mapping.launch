@@ -15,6 +15,10 @@
     <arg name="third_tb3" value="robot_3"/>
   </include>
 
+  <include ns="$(arg first_tb3)" file="$(find turtlebot3_bringup)/launch/includes/description.launch.xml">
+    <arg name="model" value="$(arg model)" />
+  </include>
+
   <!-- Launch the SLAM node, move_base_node and AMCL node for robot_1 -->
   <include ns="$(arg first_tb3)" file="$(find turtlebot3_slam)/launch/turtlebot3_gmapping.launch">
     <arg name="set_base_frame" value="$(arg first_tb3)/base_footprint"/>
@@ -78,19 +82,19 @@
     <arg name="odom_frame_id" value="$(arg third_tb3)/odom"/>
   </include>
 
-  <!-- Launch the map_merge node along with transform publishers -->
+  <!--
+aunch the map_merge node along with transform publishers 
   <node pkg="multirobot_map_merge" type="map_merge" respawn="false" name="map_merge" output="screen">
     <param name="robot_map_topic" value="map"/>
     <param name="robot_namespace" value="robot"/>
     <param name="merged_map_topic" value="map"/>
     <param name="world_frame" value="map"/>
     <param name="known_init_poses" value="false"/>
-    <param name="merging_rate" value="0.5"/>
+    <param name="merging_rate" value="2.0"/>
     <param name="discovery_rate" value="0.05"/>
-    <param name="estimation_rate" value="0.1"/>
-    <param name="estimation_confidence" value="1.0"/>
-  </node>
-
+    <param name="estimation_rate" value="0.5"/>
+    <param name="estimation_confidence" value="1.5"/>
+  </node> -->
 
   <node pkg="tf" type="static_transform_publisher" name="world_to_$(arg first_tb3)_tf_broadcaster"  args="0 0 0 0 0 0 /map /$(arg first_tb3)/map 100"/>
   <node pkg="tf" type="static_transform_publisher" name="world_to_$(arg second_tb3)_tf_broadcaster" args="0 0 0 0 0 0 /map /$(arg second_tb3)/map 100"/>
