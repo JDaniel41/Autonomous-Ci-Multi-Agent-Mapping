@@ -36,6 +36,7 @@
     <arg name="odom_frame_id" value="$(arg first_tb3)/odom"/>
   </include>
 
+
   <!-- Launch the SLAM node, move_base_node and AMCL node for robot_2 -->
   <include ns="$(arg second_tb3)" file="$(find turtlebot3_slam)/launch/turtlebot3_gmapping.launch">
     <arg name="set_base_frame" value="$(arg second_tb3)/base_footprint"/>
@@ -79,6 +80,7 @@
   </include>
 
   <!-- Launch the map_merge node along with transform publishers -->
+  
   <node pkg="multirobot_map_merge" type="map_merge" respawn="false" name="map_merge" output="screen">
     <param name="robot_map_topic" value="map"/>
     <param name="robot_namespace" value="robot"/>

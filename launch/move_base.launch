@@ -8,7 +8,7 @@
   <arg name="namespace" default=""/>
 
   <!-- move_base -->
-  <node pkg="move_base" type="move_base" respawn="false" name="move_base_node" output="screen">
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
     <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" />
     <rosparam file="$(find multi-agent-mapping)/params/costmap_common_params_$(arg model).yaml" command="load" ns="global_costmap" />
     <rosparam file="$(find multi-agent-mapping)/params/costmap_common_params_$(arg model).yaml" command="load" ns="local_costmap" />
