@@ -1,3 +1,8 @@
+<!--
+    This launch file will launch the explore_lite nodes. MAKE SURE YOU HAVE
+    EXECUTED MULTI-AGENT-MAPPING.LAUNCH BEFORE RUNNING THIS LAUNCH FILE. If you
+    do not launch the files in this order, than the nodes will not work.
+-->
 <launch>
   <node ns="robot_1" pkg="explore_lite" type="explore" respawn="false" name="explore" output="screen">
     <param name="robot_base_frame" value="robot_1/base_link"/>

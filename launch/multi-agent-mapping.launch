@@ -1,104 +1,108 @@
+<!--
+    This launch file will launch three turtlebots into the turtlebot3_house
+    simulation model. It will also configure each of the navigations stacks,
+    SLAM nodes and the multirobot_map_merge node so they will each be running
+    upon completion of the launch file.
+-->
 <launch>
-  <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [burger, waffle, waffle_pi]"/>
-  <arg name="move_forward_only" default="false"/>
+    <!-- If you have the environment variable for the Turtlebot3 Model already set,
+    don't worry about setting the model. Otherwise, make sure you select the model
+    before proceeding. -->
+    <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [burger, waffle, waffle_pi]"/>
+    <arg name="move_forward_only" default="false"/>
 
-  <!-- Establish Robot Namespaces -->
-  <arg name="first_tb3" value="robot_1"/>
-  <arg name="second_tb3" value="robot_2"/>
-  <arg name="third_tb3" value="robot_3"/>
-
-
-  <!-- Launch the Gazebo Simulation and Three Turtlebots -->
-  <include file="$(find turtlebot3_gazebo)/launch/multi_turtlebot3.launch">
+    <!-- Establish Robot Namespaces -->
     <arg name="first_tb3" value="robot_1"/>
     <arg name="second_tb3" value="robot_2"/>
     <arg name="third_tb3" value="robot_3"/>
-  </include>
-
-  <!-- Launch the SLAM node, move_base_node and AMCL node for robot_1 -->
-  <include ns="$(arg first_tb3)" file="$(find turtlebot3_slam)/launch/turtlebot3_gmapping.launch">
-    <arg name="set_base_frame" value="$(arg first_tb3)/base_footprint"/>
-    <arg name="set_odom_frame" value="$(arg first_tb3)/odom"/>
-    <arg name="set_map_frame" value="$(arg first_tb3)/map"/>
-  </include>
-
-  <include ns="$(arg first_tb3)" file="$(find multi-agent-mapping)/launch/move_base.launch">
-    <arg name="model" value="$(arg model)" />
-    <arg name="move_forward_only" value="$(arg move_forward_only)"/>
-    <arg name="cmd_vel_topic" value="cmd_vel"/>
-    <arg name="namespace" value="$(arg first_tb3)"/>
-  </include>
-
-  <include ns="$(arg first_tb3)" file="$(find multi-agent-mapping)/launch/amcl.launch">
-    <arg name="scan_topic" value="$(arg first_tb3)/scan"/>
-    <arg name="global_frame_id" value="$(arg first_tb3)/map"/>
-    <arg name="base_frame_id" value="$(arg first_tb3)/base_footprint"/>
-    <arg name="odom_frame_id" value="$(arg first_tb3)/odom"/>
-  </include>
 
 
-  <!-- Launch the SLAM node, move_base_node and AMCL node for robot_2 -->
-  <include ns="$(arg second_tb3)" file="$(find turtlebot3_slam)/launch/turtlebot3_gmapping.launch">
-    <arg name="set_base_frame" value="$(arg second_tb3)/base_footprint"/>
-    <arg name="set_odom_frame" value="$(arg second_tb3)/odom"/>
-    <arg name="set_map_frame" value="$(arg second_tb3)/map"/>
-  </include>
+    <!-- Launch the Gazebo Simulation and Three Turtlebots -->
+    <include file="$(find turtlebot3_gazebo)/launch/multi_turtlebot3.launch">
+        <arg name="first_tb3" value="robot_1"/>
+        <arg name="second_tb3" value="robot_2"/>
+        <arg name="third_tb3" value="robot_3"/>
+    </include>
 
-  <include ns="$(arg second_tb3)" file="$(find multi-agent-mapping)/launch/move_base.launch">
-    <arg name="model" value="$(arg model)" />
-    <arg name="move_forward_only" value="$(arg move_forward_only)"/>
-    <arg name="cmd_vel_topic" value="cmd_vel"/>
-    <arg name="namespace" value="$(arg second_tb3)"/>
-  </include>
+    <!-- Launch the SLAM node, move_base_node and AMCL node for robot_1 -->
+    <include ns="$(arg first_tb3)" file="$(find turtlebot3_slam)/launch/turtlebot3_gmapping.launch">
+        <arg name="set_base_frame" value="$(arg first_tb3)/base_footprint"/>
+        <arg name="set_odom_frame" value="$(arg first_tb3)/odom"/>
+        <arg name="set_map_frame" value="$(arg first_tb3)/map"/>
+    </include>
 
-  <include ns="$(arg second_tb3)" file="$(find multi-agent-mapping)/launch/amcl.launch">
-    <arg name="scan_topic" value="$(arg second_tb3)/scan"/>
-    <arg name="global_frame_id" value="$(arg second_tb3)/map"/>
-    <arg name="base_frame_id" value="$(arg second_tb3)/base_footprint"/>
-    <arg name="odom_frame_id" value="$(arg second_tb3)/odom"/>
-  </include>
+    <include ns="$(arg first_tb3)" file="$(find multi-agent-mapping)/launch/move_base.launch">
+        <arg name="model" value="$(arg model)" />
+        <arg name="move_forward_only" value="$(arg move_forward_only)"/>
+        <arg name="cmd_vel_topic" value="cmd_vel"/>
+        <arg name="namespace" value="$(arg first_tb3)"/>
+    </include>
 
-  <!-- Launch the SLAM node, move_base_node and AMCL node for robot_3 -->
-  <include ns="$(arg third_tb3)" file="$(find turtlebot3_slam)/launch/turtlebot3_gmapping.launch">
-    <arg name="set_base_frame" value="$(arg third_tb3)/base_footprint"/>
-    <arg name="set_odom_frame" value="$(arg third_tb3)/odom"/>
-    <arg name="set_map_frame" value="$(arg third_tb3)/map"/>
-  </include>
-
-  <include ns="$(arg third_tb3)" file="$(find multi-agent-mapping)/launch/move_base.launch">
-    <arg name="model" value="$(arg model)" />
-    <arg name="move_forward_only" value="$(arg move_forward_only)"/>
-    <arg name="cmd_vel_topic" value="cmd_vel"/>
-    <arg name="namespace" value="$(arg third_tb3)"/>
-  </include>
-
-  <include ns="$(arg third_tb3)" file="$(find multi-agent-mapping)/launch/amcl.launch">
-    <arg name="scan_topic" value="$(arg third_tb3)/scan"/>
-    <arg name="global_frame_id" value="$(arg third_tb3)/map"/>
-    <arg name="base_frame_id" value="$(arg third_tb3)/base_footprint"/>
-    <arg name="odom_frame_id" value="$(arg third_tb3)/odom"/>
-  </include>
-
-  <!-- Launch the map_merge node along with transform publishers -->
-  
-  <node pkg="multirobot_map_merge" type="map_merge" respawn="false" name="map_merge" output="screen">
-    <param name="robot_map_topic" value="map"/>
-    <param name="robot_namespace" value="robot"/>
-    <param name="merged_map_topic" value="map"/>
-    <param name="world_frame" value="map"/>
-    <param name="known_init_poses" value="false"/>
-    <param name="merging_rate" value="0.5"/>
-    <param name="discovery_rate" value="0.05"/>
-    <param name="estimation_rate" value="0.1"/>
-    <param name="estimation_confidence" value="1.0"/>
-  </node>
+    <include ns="$(arg first_tb3)" file="$(find multi-agent-mapping)/launch/amcl.launch">
+        <arg name="scan_topic" value="$(arg first_tb3)/scan"/>
+        <arg name="global_frame_id" value="$(arg first_tb3)/map"/>
+        <arg name="base_frame_id" value="$(arg first_tb3)/base_footprint"/>
+        <arg name="odom_frame_id" value="$(arg first_tb3)/odom"/>
+    </include>
 
 
-  <node pkg="tf" type="static_transform_publisher" name="world_to_$(arg first_tb3)_tf_broadcaster"  args="0 0 0 0 0 0 /map /$(arg first_tb3)/map 100"/>
-  <node pkg="tf" type="static_transform_publisher" name="world_to_$(arg second_tb3)_tf_broadcaster" args="0 0 0 0 0 0 /map /$(arg second_tb3)/map 100"/>
-  <node pkg="tf" type="static_transform_publisher" name="world_to_$(arg third_tb3)_tf_broadcaster" args="0 0 0 0 0 0 /map /$(arg third_tb3)/map 100"/>
+    <!-- Launch the SLAM node, move_base_node and AMCL node for robot_2 -->
+    <include ns="$(arg second_tb3)" file="$(find turtlebot3_slam)/launch/turtlebot3_gmapping.launch">
+        <arg name="set_base_frame" value="$(arg second_tb3)/base_footprint"/>
+        <arg name="set_odom_frame" value="$(arg second_tb3)/odom"/>
+        <arg name="set_map_frame" value="$(arg second_tb3)/map"/>
+    </include>
 
-  <!-- The below line does not launch rviz correctly for some reason. Just use the rosrun equivalent instead -->
-  <!--<node name="rviz" pkg="rviz" type="rviz" args="-d 'rospack find turtlebot3_gazebo'/rviz/multi_turtlebot3_slam.rviz"/>-->
+    <include ns="$(arg second_tb3)" file="$(find multi-agent-mapping)/launch/move_base.launch">
+        <arg name="model" value="$(arg model)" />
+        <arg name="move_forward_only" value="$(arg move_forward_only)"/>
+        <arg name="cmd_vel_topic" value="cmd_vel"/>
+        <arg name="namespace" value="$(arg second_tb3)"/>
+    </include>
 
+    <include ns="$(arg second_tb3)" file="$(find multi-agent-mapping)/launch/amcl.launch">
+        <arg name="scan_topic" value="$(arg second_tb3)/scan"/>
+        <arg name="global_frame_id" value="$(arg second_tb3)/map"/>
+        <arg name="base_frame_id" value="$(arg second_tb3)/base_footprint"/>
+        <arg name="odom_frame_id" value="$(arg second_tb3)/odom"/>
+    </include>
+
+    <!-- Launch the SLAM node, move_base_node and AMCL node for robot_3 -->
+    <include ns="$(arg third_tb3)" file="$(find turtlebot3_slam)/launch/turtlebot3_gmapping.launch">
+        <arg name="set_base_frame" value="$(arg third_tb3)/base_footprint"/>
+        <arg name="set_odom_frame" value="$(arg third_tb3)/odom"/>
+        <arg name="set_map_frame" value="$(arg third_tb3)/map"/>
+    </include>
+
+    <include ns="$(arg third_tb3)" file="$(find multi-agent-mapping)/launch/move_base.launch">
+        <arg name="model" value="$(arg model)" />
+        <arg name="move_forward_only" value="$(arg move_forward_only)"/>
+        <arg name="cmd_vel_topic" value="cmd_vel"/>
+        <arg name="namespace" value="$(arg third_tb3)"/>
+    </include>
+
+    <include ns="$(arg third_tb3)" file="$(find multi-agent-mapping)/launch/amcl.launch">
+        <arg name="scan_topic" value="$(arg third_tb3)/scan"/>
+        <arg name="global_frame_id" value="$(arg third_tb3)/map"/>
+        <arg name="base_frame_id" value="$(arg third_tb3)/base_footprint"/>
+        <arg name="odom_frame_id" value="$(arg third_tb3)/odom"/>
+    </include>
+
+    <!-- Launch the map_merge node along with transform publishers -->
+    <node pkg="multirobot_map_merge" type="map_merge" respawn="false" name="map_merge" output="screen">
+        <param name="robot_map_topic" value="map"/>
+        <param name="robot_namespace" value="robot"/>
+        <param name="merged_map_topic" value="map"/>
+        <param name="world_frame" value="map"/>
+        <param name="known_init_poses" value="false"/>
+        <param name="merging_rate" value="0.5"/>
+        <param name="discovery_rate" value="0.05"/>
+        <param name="estimation_rate" value="0.1"/>
+        <param name="estimation_confidence" value="1.0"/>
+    </node>
+
+
+    <node pkg="tf" type="static_transform_publisher" name="world_to_$(arg first_tb3)_tf_broadcaster"  args="0 0 0 0 0 0 /map /$(arg first_tb3)/map 100"/>
+    <node pkg="tf" type="static_transform_publisher" name="world_to_$(arg second_tb3)_tf_broadcaster" args="0 0 0 0 0 0 /map /$(arg second_tb3)/map 100"/>
+    <node pkg="tf" type="static_transform_publisher" name="world_to_$(arg third_tb3)_tf_broadcaster" args="0 0 0 0 0 0 /map /$(arg third_tb3)/map 100"/>
 </launch>
