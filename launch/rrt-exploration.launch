@@ -9,17 +9,17 @@
 
 
   <node ns="$(arg first_tb3)" pkg="rrt_exploration" type="local_rrt_detector" name="local_rrt_detector">
-    <param name="/robot_1/base_link" value="base_link"/>
+    <param name="/robot_1/base_link" value="robot_1/base_link"/>
     <param name="map_topic" value="map"/>
   </node>
 
   <node ns="$(arg second_tb3)" pkg="rrt_exploration" type="local_rrt_detector" name="local_rrt_detector">
-    <param name="/robot_1/base_link" value="base_link"/>
+    <param name="/robot_1/base_link" value="robot_2/base_link"/>
     <param name="map_topic" value="map"/>
   </node>
 
   <node ns="$(arg third_tb3)" pkg="rrt_exploration" type="local_rrt_detector" name="local_rrt_detector">
-    <param name="/robot_1/base_link" value="base_link"/>
+    <param name="/robot_1/base_link" value="robot_3/base_link"/>
     <param name="map_topic" value="map"/>
   </node>
 
@@ -36,5 +36,7 @@
     <node pkg="rrt_exploration" type="assigner.py" name="assigner">
         <param name="namespace" value="robot_"/>
         <param name="n_robots" value="3"/>
+        <param name="global_frame" value="map"/>
     </node>
+
 </launch>

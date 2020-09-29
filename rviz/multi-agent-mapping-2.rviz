@@ -18,7 +18,6 @@ Panels:
         - /Map4
         - /PoseWithCovariance1
         - /Marker1
-        - /Marker1/Status1
         - /Marker1/Namespaces1
         - /PointStamped1
       Splitter Ratio: 0.36039602756500244
@@ -41,7 +40,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: LaserScan
+    SyncSource: ""
 Preferences:
   PromptSaveOnExit: true
 Toolbars:
@@ -491,7 +490,7 @@ Visualization Manager:
       Marker Topic: /global_rrt_frontier_detector_shapes
       Name: Marker
       Namespaces:
-        markers: true
+        {}
       Queue Size: 100
       Value: true
     - Alpha: 1
@@ -541,11 +540,11 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Scale: 223.86317443847656
+      Scale: 42.487125396728516
       Target Frame: map
       Value: TopDownOrtho (rviz)
-      X: 6.1360602378845215
-      Y: -0.1471797376871109
+      X: 0.28570911288261414
+      Y: -1.128331184387207
     Saved: ~
 Window Geometry:
   Displays:
